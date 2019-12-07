@@ -150,7 +150,7 @@ module ActiveRecord
           h = {}
           records.each do |record|
             reflection = record.class._reflect_on_association(association)
-            next if polymorphic_parent && !reflection || !record.association(association).klass
+            next if (polymorphic_parent || record.has_attribute?(record.class.inheritance_column)) && !reflection || !record.association(association).klass
             (h[reflection] ||= []) << record
           end
           h
